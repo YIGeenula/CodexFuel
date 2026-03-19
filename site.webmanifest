@@ -1,26 +1,47 @@
 {
-  "name": "CodeXFuel Pass – Sri Lanka Fuel Pass Generator",
+  "name": "CodeXFuel Pass",
   "short_name": "CodeXFuel",
-  "description": "Free Sri Lanka fuel pass generator. Create your QR-coded fuel pass instantly with full privacy.",
-  "lang": "si",
+  "description": "Free, 100% private Sri Lanka fuel pass QR code generator. Create personalised fuel passes for Petrol 92, Petrol 95, Auto Diesel and Super Diesel – all data stays on your device.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#0d1117",
-  "theme_color": "#0f1117",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
+  "background_color": "#0d0d14",
+  "theme_color": "#0d0d14",
+  "lang": "en",
+  "dir": "ltr",
   "categories": ["utilities", "productivity"],
+  "iarc_rating_id": "",
+  "prefer_related_applications": false,
   "icons": [
     {
-      "src": "favicon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "favicon-512x512.png",
+      "src": "/og-image.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "label": "CodeXFuel Pass – Fuel pass generator home screen"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Generate Fuel Pass",
+      "short_name": "Generate",
+      "description": "Quickly generate a new Sri Lanka fuel pass QR code",
+      "url": "/",
+      "icons": [
+        {
+          "src": "/og-image.png",
+          "sizes": "512x512",
+          "type": "image/png"
+        }
+      ]
     }
   ]
 }
