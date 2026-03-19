@@ -1,0 +1,483 @@
+:root {
+    --bg-color: #0d1117;
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --text-primary: #f0f6fc;
+    --text-secondary: #8b949e;
+    --accent-color: #3b82f6;
+    --accent-hover: #2563eb;
+    --success: #2ea043;
+    --petrol: #eab308;
+    --diesel: #3b82f6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image:
+        radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.15), transparent 25%);
+    padding: 2rem 0;
+}
+
+.container {
+    display: flex;
+    gap: 4rem;
+    max-width: 1000px;
+    width: 90%;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 10;
+}
+
+@media (max-width: 800px) {
+    .container {
+        flex-direction: column-reverse;
+        /* Pass on top in mobile */
+        gap: 2rem;
+    }
+}
+
+.form-section {
+    flex: 1;
+    max-width: 400px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 2.5rem;
+    border-radius: 24px;
+    backdrop-filter: blur(20px);
+}
+
+.form-section h2 {
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    background: linear-gradient(to right, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.input-group input[type="text"],
+.input-group select {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-group input[type="text"]:focus,
+.input-group select:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.input-group select option {
+    background: var(--bg-color);
+    color: white;
+}
+
+.file-input {
+    width: 100%;
+    padding: 0.8rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.file-input::-webkit-file-upload-button {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+}
+
+.secondary-actions {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.primary-btn,
+.secondary-btn {
+    padding: 1rem;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.primary-btn {
+    background: var(--accent-color);
+    font-size: 1.1rem;
+    width: 100%;
+    /* This will still apply when button is alone */
+}
+
+.secondary-actions .primary-btn {
+    width: auto;
+    /* But in the button group, let flex control the width */
+}
+
+.secondary-btn {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.primary-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -10px rgba(59, 130, 246, 0.5);
+}
+
+.secondary-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+/* Vertical CR80 Card Dimensions */
+/* 2.125in x 3.375in = aspect ratio ~ 0.629 */
+/* We'll use 320px x 508px for web display */
+.card-section {
+    perspective: 1000px;
+    display: flex;
+    justify-content: center;
+}
+
+.pass-card {
+    width: 320px;
+    height: 508px;
+    background: #1e1e1e;
+    /* solid dark background for the card itself */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.5s ease;
+    transform-style: preserve-3d;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+.pass-card:hover {
+    transform: translateY(-10px) rotateX(5deg) rotateY(10deg);
+    box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.6), 0 0 30px rgba(59, 130, 246, 0.3);
+}
+
+.card-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.01) 100%);
+    pointer-events: none;
+}
+
+.pass-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.pass-card:hover::before {
+    opacity: 1;
+}
+
+.card-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    z-index: 2;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.logo svg {
+    color: var(--accent-color);
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    z-index: 2;
+}
+
+.qr-container {
+    background: white;
+    padding: 0.6rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+/* Ensure uploaded image looks clear */
+.uploaded-qr {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+
+.details {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.detail-item .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    letter-spacing: 2px;
+    margin-bottom: 0.3rem;
+}
+
+.detail-item .value {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #fff;
+}
+
+.fuel-badge {
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    z-index: 2;
+}
+
+/* RESPONSIVE PRIVACY FOOTER */
+.privacy-notice {
+    /* Mobile-first: spans full width with margins */
+    width: 90%;
+    margin: 4rem auto 2rem auto;
+    /* Top, Right, Bottom, Left */
+    padding: 1.5rem;
+    text-align: center;
+    color: #f0f6fc;
+    line-height: 1.6;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(167, 139, 250, 0.1) 100%);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.privacy-notice p {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.privacy-notice p:last-child {
+    margin-bottom: 0;
+}
+
+.privacy-notice strong {
+    color: #a78bfa;
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ========================================================== */
+/* PRINT STYLES - STRICTLY CR80 CARD SIZE (2.125in x 3.375in) */
+/* ========================================================== */
+@media print {
+    @page {
+        margin: 0;
+        size: 2.125in 3.375in portrait;
+        /* Force page size to pass size */
+    }
+
+    body {
+        background: none;
+        margin: 0;
+    }
+
+    .d-print-none,
+    .container::before {
+        display: none !important;
+    }
+
+    .pass-card {
+        width: 2.125in !important;
+        height: 3.375in !important;
+        margin: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        transform: none !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #1e1e1e !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        padding: 0.25in !important;
+        /* Scale padding down */
+    }
+
+    /* Scale elements down for the real physical size */
+    .logo {
+        font-size: 12pt !important;
+    }
+
+    .logo svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .qr-container {
+        width: 1.25in !important;
+        height: 1.25in !important;
+        padding: 0.05in !important;
+        margin-bottom: 0.1in !important;
+        border-radius: 5px !important;
+    }
+
+    .status-badge {
+        font-size: 6pt !important;
+        padding: 2px 6px !important;
+        margin-bottom: 0.1in !important;
+    }
+
+    .detail-item .label {
+        font-size: 5pt !important;
+        margin-bottom: 1px !important;
+    }
+
+    .detail-item .value {
+        font-size: 9pt !important;
+    }
+
+    .card-header {
+        margin-bottom: 0.1in !important;
+    }
+
+    .details {
+        gap: 0.05in !important;
+    }
+
+    .card-footer {
+        padding-top: 0.1in !important;
+        font-size: 5pt !important;
+    }
+
+    /* Desktop: Expands widely but stays readable */
+    @media (min-width: 1024px) {
+        .privacy-notice {
+            max-width: 1100px;
+            /* Wider for desktop layouts */
+            width: 100%;
+            padding: 2.5rem;
+            margin-top: 6rem;
+            display: flex;
+            /* Optional: Aligns languages side-by-side on very wide screens */
+            gap: 2rem;
+            justify-content: space-between;
+            text-align: left;
+        }
+
+        .privacy-notice p {
+            flex: 1;
+            /* Distributes languages evenly */
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+    }
+}
