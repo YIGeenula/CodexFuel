@@ -1,12 +1,13 @@
+/* Custom properties */
 :root {
-    --bg-color: #0d1117;
-    --card-bg: rgba(255, 255, 255, 0.03);
+    --bg-base: #030712;
+    --card-gls: rgba(17, 24, 39, 0.45);
     --card-border: rgba(255, 255, 255, 0.08);
-    --text-primary: #f0f6fc;
-    --text-secondary: #8b949e;
+    --text-primary: #f9fafb;
+    --text-secondary: #9ca3af;
     --accent-color: #3b82f6;
-    --accent-hover: #2563eb;
-    --success: #2ea043;
+    --accent-hover: #4f46e5;
+    --accent-gradient: linear-gradient(135deg, #3b82f6, #8b5cf6);
     --petrol: #eab308;
     --diesel: #3b82f6;
 }
@@ -18,24 +19,310 @@
     font-family: 'Outfit', sans-serif;
 }
 
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-base);
+}
+::-webkit-scrollbar-thumb {
+    background: #374151;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #4b5563;
+}
+
 body {
-    background-color: var(--bg-color);
+    background-color: var(--bg-base);
     color: var(--text-primary);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* Changed for navbar pushing down */
     align-items: center;
-    background-image:
-        radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15), transparent 25%),
-        radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.15), transparent 25%);
-    padding: 2rem 0;
+    position: relative;
+    overflow-x: hidden;
 }
 
+/* Animated background orbs */
+body::before, body::after {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    filter: blur(140px);
+    z-index: -1;
+    transform: translate(-50%, -50%);
+    animation: float 25s infinite alternate ease-in-out;
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+body::before {
+    background: radial-gradient(circle, #3b82f6 0%, transparent 60%);
+    margin-left: -25vw;
+    margin-top: -15vh;
+}
+
+body::after {
+    background: radial-gradient(circle, #8b5cf6 0%, transparent 60%);
+    margin-left: 25vw;
+    margin-top: 15vh;
+    animation-delay: -12.5s;
+}
+
+@keyframes float {
+    0% { transform: translate(-50%, -50%) scale(0.8) rotate(0deg); }
+    100% { transform: translate(-40%, -40%) scale(1.1) rotate(180deg); }
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem 2rem;
+    background: rgba(3, 7, 18, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--card-border);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-content {
+    max-width: 1100px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+
+.nav-brand svg {
+    color: var(--accent-color);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #fff;
+}
+
+.nav-btn {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff !important;
+    transition: all 0.3s ease !important;
+}
+
+.nav-btn:hover {
+    background: var(--accent-gradient) !important;
+    border-color: transparent;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+@media (max-width: 768px) {
+    .nav-links { display: none; }
+}
+
+/* Hero Section */
+.hero-section {
+    text-align: center;
+    margin-top: 8rem;
+    margin-bottom: 3rem;
+    padding: 0 1rem;
+    z-index: 10;
+    position: relative;
+    width: 100%;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+}
+
+.hero-section .highlight {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+.hero-section p {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* How It Works Section */
+.how-it-works {
+    text-align: center;
+    padding: 2rem 1rem 3rem;
+    position: relative;
+    z-index: 10;
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.how-it-works h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 2.5rem;
+    letter-spacing: -0.5px;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+@media (max-width: 700px) {
+    .steps-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+    }
+}
+
+.step-card {
+    background: rgba(17, 24, 39, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    backdrop-filter: blur(12px);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.step-number {
+    width: 48px;
+    height: 48px;
+    background: var(--accent-gradient);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 auto 1.2rem;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+}
+
+.step-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #f3f4f6;
+    margin-bottom: 0.7rem;
+}
+
+.step-card p {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.step-card a {
+    color: #a5b4fc;
+    text-decoration: underline;
+    transition: color 0.3s;
+}
+
+.step-card a:hover {
+    color: #fff;
+}
+
+/* Official Site Banner */
+.official-banner {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto 2rem;
+    padding: 1.2rem 1.8rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: rgba(234, 179, 8, 0.08);
+    border: 1px solid rgba(234, 179, 8, 0.25);
+    border-radius: 16px;
+    position: relative;
+    z-index: 10;
+}
+
+.official-banner span {
+    font-size: 1.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.official-banner p {
+    font-size: 0.92rem;
+    color: #d1d5db;
+    line-height: 1.6;
+}
+
+.official-banner strong {
+    color: #fbbf24;
+}
+
+.official-banner a {
+    color: #fbbf24;
+    text-decoration: underline;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.official-banner a:hover {
+    color: #fff;
+}
+
+/* Main Container */
 .container {
     display: flex;
     gap: 4rem;
-    max-width: 1000px;
+    max-width: 1100px;
     width: 90%;
     align-items: center;
     justify-content: center;
@@ -43,146 +330,221 @@ body {
     z-index: 10;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 850px) {
     .container {
         flex-direction: column-reverse;
-        /* Pass on top in mobile */
-        gap: 2rem;
+        gap: 3rem;
     }
 }
 
+/* Form Section Premium Glassmorphism */
 .form-section {
     flex: 1;
-    max-width: 400px;
-    background: var(--card-bg);
+    max-width: 440px;
+    width: 100%;
+    background: var(--card-gls);
     border: 1px solid var(--card-border);
     padding: 2.5rem;
-    border-radius: 24px;
-    backdrop-filter: blur(20px);
+    border-radius: 28px;
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.form-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent-gradient);
 }
 
 .form-section h2 {
     margin-bottom: 2rem;
-    font-size: 1.8rem;
-    font-weight: 600;
-    background: linear-gradient(to right, #60a5fa, #a78bfa);
+    font-size: 2.2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #e0e7ff 0%, #a5b4fc 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
+    color: transparent;
+    letter-spacing: -0.5px;
 }
 
 .input-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.6rem;
+    position: relative;
 }
 
 .input-group label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
     color: var(--text-secondary);
-    font-size: 0.9rem;
-    font-weight: 400;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
 }
 
 .input-group input[type="text"],
 .input-group select {
     width: 100%;
-    padding: 1rem;
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    color: white;
-    font-size: 1rem;
+    padding: 1.1rem 1.2rem;
+    background: rgba(17, 24, 39, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 400;
     outline: none;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+    appearance: none;
+}
+
+.input-group select {
+    background-image: url('data:image/svg+xml;utf8,<svg fill="none" stroke="%239ca3af" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>');
+    background-repeat: no-repeat;
+    background-position: right 1.2rem center;
+    background-size: 1.2rem;
+    cursor: pointer;
 }
 
 .input-group input[type="text"]:focus,
 .input-group select:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    border-color: #8b5cf6;
+    background: rgba(17, 24, 39, 0.9);
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.input-group input::placeholder {
+    color: rgba(156, 163, 175, 0.4);
 }
 
 .input-group select option {
-    background: var(--bg-color);
+    background: #111827;
     color: white;
 }
 
 .file-input {
     width: 100%;
-    padding: 0.8rem;
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px dashed rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
+    padding: 0.9rem;
+    background: rgba(17, 24, 39, 0.5);
+    border: 1px dashed rgba(165, 180, 252, 0.3);
+    border-radius: 14px;
     color: var(--text-secondary);
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.file-input:hover {
+    border-color: rgba(165, 180, 252, 0.8);
+    background: rgba(255, 255, 255, 0.03);
 }
 
 .file-input::-webkit-file-upload-button {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    color: var(--text-primary);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
+    background: linear-gradient(135deg, #1f2937, #111827);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    border-radius: 10px;
     cursor: pointer;
-    margin-right: 10px;
+    margin-right: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
-/* Action Buttons */
-.action-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    margin-top: 1.5rem;
+.file-input::-webkit-file-upload-button:hover {
+    background: #374151;
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .secondary-actions {
     display: flex;
-    gap: 0.8rem;
+    gap: 1.2rem;
+    margin-top: 2.2rem !important;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
 }
 
 .primary-btn,
 .secondary-btn {
-    padding: 1rem;
-    color: white;
+    padding: 1.1rem;
     border: none;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
+    border-radius: 14px;
+    font-size: 1.05rem;
+    font-weight: 700;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
-    transition: all 0.3s ease;
+    gap: 0.6rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .primary-btn {
-    background: var(--accent-color);
-    font-size: 1.1rem;
+    background: var(--accent-gradient);
+    color: white;
     width: 100%;
-    /* This will still apply when button is alone */
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    position: relative;
+    overflow: hidden;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
 .secondary-actions .primary-btn {
     width: auto;
-    /* But in the button group, let flex control the width */
+    flex: 1.5;
 }
 
 .secondary-btn {
     flex: 1;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.04);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.primary-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%; right: -50%;
+    bottom: -50%; left: -50%;
+    background: linear-gradient(to bottom, rgba(229, 231, 235, 0), rgba(255, 255, 255, 0.25) 50%, rgba(229, 231, 235, 0));
+    transform: rotateZ(60deg) translate(-5em, 7.5em);
+    opacity: 0;
+    transition: none;
 }
 
 .primary-btn:hover {
-    background: var(--accent-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px -10px rgba(59, 130, 246, 0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(99, 102, 241, 0.5);
+}
+
+.primary-btn:hover::after {
+    animation: sheen 1s forwards;
+}
+
+@keyframes sheen {
+    100% {
+        transform: rotateZ(60deg) translate(1em, -9em);
+        opacity: 1;
+    }
 }
 
 .secondary-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
+
+/* ========================================================== */
+/* ORIGINAL PASS-CARD STYLES (Restored as requested)          */
+/* ========================================================== */
 
 /* Vertical CR80 Card Dimensions */
 /* 2.125in x 3.375in = aspect ratio ~ 0.629 */
@@ -259,10 +621,12 @@ body {
     font-size: 1.4rem;
     color: #fff;
     letter-spacing: 1px;
+    text-shadow: none; /* Reset from earlier */
 }
 
 .logo svg {
     color: var(--accent-color);
+    filter: none; /* Reset */
 }
 
 .card-body {
@@ -285,9 +649,18 @@ body {
     align-items: center;
     overflow: hidden;
     margin-bottom: 1.5rem;
+    position: relative;
+    transition: none;
 }
 
-/* Ensure uploaded image looks clear */
+.qr-container:hover {
+    transform: none;
+}
+
+.qr-container::after {
+    display: none;
+}
+
 .uploaded-qr {
     width: 100%;
     height: 100%;
@@ -322,12 +695,14 @@ body {
     font-size: 1.25rem;
     font-weight: 400;
     color: #fff;
+    text-shadow: none;
 }
 
 .fuel-badge {
     font-weight: 600 !important;
     text-transform: uppercase;
     letter-spacing: 1px;
+    font-size: 1.25rem !important;
 }
 
 .card-footer {
@@ -340,12 +715,20 @@ body {
     z-index: 2;
 }
 
-/* RESPONSIVE PRIVACY FOOTER */
+.card-footer a {
+    color: inherit !important;
+    text-shadow: none !important;
+}
+
+.card-footer a:hover {
+    color: inherit !important;
+    text-shadow: none !important;
+}
+
+/* Privacy Footer */
 .privacy-notice {
-    /* Mobile-first: spans full width with margins */
     width: 90%;
     margin: 4rem auto 2rem auto;
-    /* Top, Right, Bottom, Left */
     padding: 1.5rem;
     text-align: center;
     color: #f0f6fc;
@@ -356,13 +739,17 @@ body {
     backdrop-filter: blur(10px);
 }
 
+.privacy-notice::before {
+    display: none;
+}
+
 .privacy-notice p {
-    margin-bottom: 1rem;
+    margin-bottom: 1rem !important;
     font-size: 0.9rem;
 }
 
 .privacy-notice p:last-child {
-    margin-bottom: 0;
+    margin-bottom: 0 !important;
 }
 
 .privacy-notice strong {
@@ -374,24 +761,83 @@ body {
     letter-spacing: 1px;
 }
 
+/* Footer Section */
+.main-footer {
+    width: 100%;
+    margin-top: 2rem;
+    padding: 4rem 2rem 2rem;
+    background: rgba(0, 0, 0, 0.4);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 10;
+}
+
+.footer-content {
+    max-width: 1100px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.footer-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.footer-desc {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    max-width: 400px;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.footer-links {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
+
+.footer-bottom {
+    width: 100%;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    color: #6b7280;
+    font-size: 0.85rem;
+}
+
 /* ========================================================== */
 /* PRINT STYLES - STRICTLY CR80 CARD SIZE (2.125in x 3.375in) */
 /* ========================================================== */
 @media print {
-    @page {
-        margin: 0;
-        size: 2.125in 3.375in portrait;
-        /* Force page size to pass size */
-    }
-
-    body {
-        background: none;
-        margin: 0;
-    }
-
+    @page { margin: 0; size: 2.125in 3.375in portrait; }
+    body { background: none; margin: 0; padding: 0 !important; }
+    
     .d-print-none,
-    .container::before {
-        display: none !important;
+    body::before,
+    body::after,
+    .container::before,
+    .navbar,
+    .hero-section,
+    .main-footer { 
+        display: none !important; 
     }
 
     .pass-card {
@@ -409,31 +855,18 @@ body {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
         padding: 0.25in !important;
-        /* Scale padding down */
     }
 
-    /* Scale elements down for the real physical size */
-    .logo {
-        font-size: 12pt !important;
-    }
-
-    .logo svg {
-        width: 14px;
-        height: 14px;
-    }
-
+    .logo { font-size: 12pt !important; }
+    .logo svg { width: 14px; height: 14px; }
     .qr-container {
         width: 1.25in !important;
         height: 1.25in !important;
         padding: 0.05in !important;
         margin-bottom: 0.1in !important;
         border-radius: 5px !important;
-    }
-
-    .status-badge {
-        font-size: 6pt !important;
-        padding: 2px 6px !important;
-        margin-bottom: 0.1in !important;
+        box-shadow: none !important;
+        border: 1px solid #ddd;
     }
 
     .detail-item .label {
@@ -441,43 +874,27 @@ body {
         margin-bottom: 1px !important;
     }
 
-    .detail-item .value {
-        font-size: 9pt !important;
+    .detail-item .value { font-size: 9pt !important; }
+    .card-header { margin-bottom: 0.1in !important; }
+    .details { gap: 0.05in !important; }
+    .card-footer { padding-top: 0.1in !important; font-size: 5pt !important; }
+}
+
+@media (min-width: 1024px) {
+    .privacy-notice {
+        max-width: 1100px;
+        width: 100%;
+        padding: 2.5rem;
+        margin-top: 6rem;
+        display: flex;
+        gap: 2rem;
+        justify-content: space-between;
+        text-align: left;
     }
 
-    .card-header {
-        margin-bottom: 0.1in !important;
-    }
-
-    .details {
-        gap: 0.05in !important;
-    }
-
-    .card-footer {
-        padding-top: 0.1in !important;
-        font-size: 5pt !important;
-    }
-
-    /* Desktop: Expands widely but stays readable */
-    @media (min-width: 1024px) {
-        .privacy-notice {
-            max-width: 1100px;
-            /* Wider for desktop layouts */
-            width: 100%;
-            padding: 2.5rem;
-            margin-top: 6rem;
-            display: flex;
-            /* Optional: Aligns languages side-by-side on very wide screens */
-            gap: 2rem;
-            justify-content: space-between;
-            text-align: left;
-        }
-
-        .privacy-notice p {
-            flex: 1;
-            /* Distributes languages evenly */
-            margin-bottom: 0;
-            font-size: 0.95rem;
-        }
+    .privacy-notice p {
+        flex: 1;
+        margin-bottom: 0 !important;
+        font-size: 0.95rem;
     }
 }
