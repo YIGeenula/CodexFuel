@@ -318,6 +318,77 @@
           uploaded image never leaves this device. It is completely secure.</small>
       </div>
 
+      <div id="qrAdjustmentControls" style="display: none; margin-top: 1.5rem; background: rgba(255, 255, 255, 0.03); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05);">
+        <h3 style="font-size: 0.95rem; color: #fff; margin-bottom: 1rem;">QR Adjustments</h3>
+        
+        <div class="input-group" style="margin-bottom: 1rem;">
+          <label for="qrScaleInput">Zoom (<span id="qrScaleValue">100%</span>)</label>
+          <input type="range" id="qrScaleInput" min="10" max="400" value="100">
+        </div>
+
+        <div class="input-group" style="margin-bottom: 1rem;">
+          <label for="qrXInput">Horizontal Position</label>
+          <input type="range" id="qrXInput" min="-150" max="150" value="0">
+        </div>
+
+        <div class="input-group" style="margin-bottom: 1rem;">
+          <label for="qrYInput">Vertical Position</label>
+          <input type="range" id="qrYInput" min="-150" max="150" value="0">
+        </div>
+        
+        <button id="resetQrBtn" class="secondary-btn" style="padding: 0.6rem; font-size: 0.85rem; width: 100%; margin-top: 0.5rem;">Reset Adjustments</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <details class="advanced-settings">
+        <summary><h2>🎨 Design Settings <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="chevron"><path d="M6 9l6 6 6-6"/></svg></h2></summary>
+        
+        <div class="settings-content">
+          <div class="design-grid">
+            <div class="input-group color-group">
+              <label for="bgColorInput">Background</label>
+              <input type="color" id="bgColorInput" value="#1e1e1e" class="color-input">
+            </div>
+            
+            <div class="input-group color-group">
+              <label for="textColorInput">Primary Text</label>
+              <input type="color" id="textColorInput" value="#ffffff" class="color-input">
+            </div>
+
+            <div class="input-group color-group">
+              <label for="labelColorInput">Labels Text</label>
+              <input type="color" id="labelColorInput" value="#9ca3af" class="color-input">
+            </div>
+
+            <div class="input-group color-group">
+              <label for="accentColorInput">Accent/Logo</label>
+              <input type="color" id="accentColorInput" value="#3b82f6" class="color-input">
+            </div>
+            
+            <div class="input-group color-group">
+              <label for="qrBgColorInput">QR Box</label>
+              <input type="color" id="qrBgColorInput" value="#ffffff" class="color-input">
+            </div>
+            
+            <div class="input-group color-group">
+              <label for="borderColorInput">Border</label>
+              <input type="color" id="borderColorInput" value="#ffffff" class="color-input">
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="borderRadiusInput">Corner Radius (<span id="borderRadiusValue">16px</span>)</label>
+            <input type="range" id="borderRadiusInput" min="0" max="40" value="16">
+          </div>
+          
+          <div class="input-group">
+            <label for="borderOpacityInput">Border Opacity (<span id="borderOpacityValue">10%</span>)</label>
+            <input type="range" id="borderOpacityInput" min="0" max="100" value="10">
+          </div>
+        </div>
+      </details>
+
       <div class="secondary-actions" style="margin-top: 1.5rem;">
         <button id="downloadImageBtn" class="primary-btn">🖼️ Image (PNG)</button>
         <button id="downloadPdfBtn" class="secondary-btn">📄 PDF</button>

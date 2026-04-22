@@ -7,10 +7,39 @@ document.addEventListener('DOMContentLoaded', () => {
     const cardVehicle = document.getElementById('cardVehicle');
     const cardFuelType = document.getElementById('cardFuelType');
     
+    // Design Elements
+    const bgColorInput = document.getElementById('bgColorInput');
+    const textColorInput = document.getElementById('textColorInput');
+    const labelColorInput = document.getElementById('labelColorInput');
+    const accentColorInput = document.getElementById('accentColorInput');
+    const qrBgColorInput = document.getElementById('qrBgColorInput');
+    const borderColorInput = document.getElementById('borderColorInput');
+    const borderRadiusInput = document.getElementById('borderRadiusInput');
+    const borderOpacityInput = document.getElementById('borderOpacityInput');
+
+    const borderRadiusValue = document.getElementById('borderRadiusValue');
+    const borderOpacityValue = document.getElementById('borderOpacityValue');
+
+    const passCard = document.getElementById('passCard');
+    const qrContainer = document.querySelector('.qr-container');
+    const labels = document.querySelectorAll('.detail-item .label');
+    const values = document.querySelectorAll('.detail-item .value');
+    const logoSvg = document.querySelector('.logo svg');
+    const logoText = document.querySelector('.logo span');
+    const idNumber = document.querySelector('.id-number');
+    
     // QR Code visual elements
     const qrcodeElement = document.getElementById("qrcode");
     const uploadedQrImg = document.getElementById("uploadedQrImg");
     const qrUploadInput = document.getElementById("qrUpload");
+    
+    // QR Adjustments
+    const qrAdjustmentControls = document.getElementById("qrAdjustmentControls");
+    const qrScaleInput = document.getElementById("qrScaleInput");
+    const qrScaleValue = document.getElementById("qrScaleValue");
+    const qrXInput = document.getElementById("qrXInput");
+    const qrYInput = document.getElementById("qrYInput");
+    const resetQrBtn = document.getElementById("resetQrBtn");
     
     // Setup initial default generative QR Code
     let qrcode = new QRCode(qrcodeElement, {
@@ -65,6 +94,46 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCard();
     
     // ==========================================
+    // Design Customisation Logic
+    // ==========================================
+    function hexToRgba(hex, opacity) {
+        let r = parseInt(hex.slice(1, 3), 16),
+            g = parseInt(hex.slice(3, 5), 16),
+            b = parseInt(hex.slice(5, 7), 16);
+        return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+    }
+
+    function updateDesign() {
+        passCard.style.backgroundColor = bgColorInput.value;
+        passCard.style.borderRadius = `${borderRadiusInput.value}px`;
+        borderRadiusValue.textContent = `${borderRadiusInput.value}px`;
+        
+        qrContainer.style.backgroundColor = qrBgColorInput.value;
+        qrContainer.style.borderRadius = `${Math.max(borderRadiusInput.value * 0.75, 4)}px`;
+
+        // Text Colors
+        logoText.style.color = textColorInput.value;
+        values.forEach(val => val.style.color = textColorInput.value);
+        labels.forEach(lbl => lbl.style.color = labelColorInput.value);
+        
+        logoSvg.style.color = accentColorInput.value;
+        idNumber.style.color = textColorInput.value;
+        
+        let opacity = borderOpacityInput.value / 100;
+        borderOpacityValue.textContent = `${borderOpacityInput.value}%`;
+        passCard.style.borderColor = hexToRgba(borderColorInput.value, opacity);
+        
+        // Ensure fuel color overrides text color for fuel value
+        updateCard();
+    }
+
+    [bgColorInput, textColorInput, labelColorInput, accentColorInput, qrBgColorInput, borderColorInput, borderRadiusInput, borderOpacityInput].forEach(el => {
+        el.addEventListener('input', updateDesign);
+    });
+
+    updateDesign();
+    
+    // ==========================================
     // QR Image Upload Logic (In Browser Memory)
     // ==========================================
     qrUploadInput.addEventListener('change', (event) => {
@@ -79,14 +148,36 @@ document.addEventListener('DOMContentLoaded', () => {
             uploadedQrImg.style.display = 'block';
             qrcodeElement.style.display = 'none';
             usingCustomQR = true;
+            qrAdjustmentControls.style.display = 'block';
+            updateQrTransform();
         };
         reader.readAsDataURL(file);
+    });
+
+    // QR Image Adjustment Logic
+    function updateQrTransform() {
+        const scale = qrScaleInput.value / 100;
+        const x = qrXInput.value;
+        const y = qrYInput.value;
+        
+        qrScaleValue.textContent = `${qrScaleInput.value}%`;
+        uploadedQrImg.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+    }
+
+    [qrScaleInput, qrXInput, qrYInput].forEach(el => {
+        el.addEventListener('input', updateQrTransform);
+    });
+
+    resetQrBtn.addEventListener('click', () => {
+        qrScaleInput.value = 100;
+        qrXInput.value = 0;
+        qrYInput.value = 0;
+        updateQrTransform();
     });
 
     // ==========================================
     // Print and Download Logic
     // ==========================================
-    const passCard = document.getElementById('passCard');
     
     function resetTransformForCapture() {
         passCard.style.transform = 'none';
@@ -101,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const canvas = await html2canvas(passCard, {
             scale: 3, 
-            backgroundColor: '#1e1e1e', // Match CSS dark background
+            backgroundColor: bgColorInput.value, // Match chosen dark background
             useCORS: true
         });
         
@@ -118,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const canvas = await html2canvas(passCard, {
             scale: 3,
-            backgroundColor: '#1e1e1e',
+            backgroundColor: bgColorInput.value,
             useCORS: true
         });
         
